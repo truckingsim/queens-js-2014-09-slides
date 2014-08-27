@@ -1,0 +1,7 @@
+.reveal .slides section .highlight .fragment,
+.reveal .slides section .highlight .background-info {
+  opacity: 0.5;
+}
+.reveal .slides section .highlight .fragment.current-fragment {
+  opacity: 1;
+}
