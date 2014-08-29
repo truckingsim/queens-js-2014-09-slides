@@ -1,14 +1,33 @@
 .reveal {
     .slides section {
         .highlight {
-            .fragment, .background-info {
-                opacity: 0.5;
-            }
             .fragment {
+                opacity: 0.5;
                 &.current-fragment {
                     opacity: 1;
                 }
             }
+        }
+    }
+
+    .background-info {
+        opacity: 0.5;
+    }
+    pre code {
+        max-height: 600px;
+        overflow-x: auto;
+        word-wrap: normal;
+    }
+
+    blockquote {
+        &:before, &:after {
+            content: normal;
+        }
+        .quote:before {
+            content: '\201C';
+        }
+        .quote:after {
+            content: '\201D';
         }
     }
 }

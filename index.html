@@ -72,25 +72,96 @@
 
                 <section>
                     <h3>Scraping the parent page for data</h3>
-                    <pre class="highlight javascript">
-var ProjectBookmarkletObject = {
+                    <pre class="highlight javascript">var ProjectBookmarkletObject = {
+    appHost: window._project_name_url,
+    metaTags: {},
     initialize: function(){
         this.loadMetaTags();
-        console.log(this.metaTags);
+        <span class="background-info">this.generateIframe()</span>
     }
-    metaTags: {},
     loadMetaTags: function(){
-        <span class="fragment visible current-fragment">var tags = document.getElementsByTagName('meta');</span>
-        <span class="fragment">for(var i = 0; i < tags.length; i++){
+        var tags = document.getElementsByTagName('meta');
+        for(var i = 0; i < tags.length; i++){
             var key = tags[i].name || tags[i].getAttribute('itemprop');
             var content = tags[i].getAttribute('content');
             if(key && content){
                 this.metaTags[key] = content;
             }
-        }</span>
+        }
     }
-};
-                    </pre>
+};</pre>
+                </section>
+
+                <section>
+                    <h3>Generate the iframe</h3>
+                    <pre class="highlight javascript">var ProjectBookmarkletObject = {
+    appHost: window._project_name_url,
+    metaTags: {},
+    initialize: function(){
+        <span class="background-info">this.loadMetaTags();</span>
+        this.generateIframe();
+    },
+    generateIframe: function(){
+        <span class="fragment">var container = document.createElement('div'), that = this;
+        container.setAttribute('id', 'ProjectContainerUniqueId');</span>
+
+        <span class="fragment">var iframe = document.createElement('iframe');
+        iframe.setAttribute('src', this.appHost);
+        iframe.setAttribute('frameBorder', '0');
+        iframe.setAttribute('id', 'project_iframe');
+        iframe.setAttribute('allowTransparency', 'true');</span>
+
+        <span class="fragment">container.appendChild(iframe);
+        document.body.appendChild(container);</span>
+
+        <!--//On load we will actually send the data via window.postMessage
+        <span class="fragment">iframe.onload = function(){ that.sendPostMessage(iframe); };</span>-->
+    }
+}</pre>
+                </section>
+
+                <section>
+                    <h3>How do I get the data to the iframe?</h3>
+                    <h4>Don't use GET variables use postMessage!</h4>
+                    <img src="img/caniuse-postMessage.png" />
+                </section>
+
+                <section>
+                    <h3>IE 8,9,10</h3>
+                    <h4></h4>
+                </section>
+
+                <section>
+                    <h3>What is postMessage?</h3>
+                    <br>
+
+                    <blockquote><span class="quote">The window.postMessage method <strong>safely enables cross-origin communication</strong>.</span> - <a href="http://mdn.io/postMessage">http://mdn.io/postMessage</a></blockquote>
+                </section>
+
+                <section>
+                    <h3>window.postMessage?</h3>
+                    <pre class="highlight javascript">var ProjectBookmarkletObject = {
+  appHost: window._project_name_url,
+  metaTags: {},
+  initialize: function(){
+    <span class="background-info">this.loadMetaTags();</span>
+    this.generateIframe();
+  },
+  sendPostMessage: function(iframe){
+    var that = this;
+    iframe.contentWindow.postMessage(
+      JSON.stringify(this.metaTags),
+      this.appHost
+    );
+
+    window.addEventListener('message', function(event){
+      if(event.origin === that.appHost && event.data == 'some_trigger'){
+        // Do some action
+      }
+    });
+  }
+}</pre>
+                    <p><a href="http://mdn.io/postMessage" target="_blank">http://mdn.io/postMessage</a></p>
                 </section>
 			</div>
 
