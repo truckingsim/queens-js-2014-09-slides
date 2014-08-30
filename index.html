@@ -45,7 +45,7 @@
 			<div class="slides">
 				<section>
                     <h2>Bookmarklets and you!</h2>
-                    By Adam Heim / @truckingsim
+                    By Adam Heim / @truckingsim / @croscon
 				</section>
 
                 <section>
@@ -124,11 +124,9 @@
                     <h3>How do I get the data to the iframe?</h3>
                     <h4>Don't use GET variables use postMessage!</h4>
                     <img src="img/caniuse-postMessage.png" />
-                </section>
-
-                <section>
-                    <h3>IE 8,9,10</h3>
-                    <h4></h4>
+                    <p>
+                        postMessage with IE 8,9 strings only
+                    </p>
                 </section>
 
                 <section>
@@ -136,6 +134,9 @@
                     <br>
 
                     <blockquote><span class="quote">The window.postMessage method <strong>safely enables cross-origin communication</strong>.</span> - <a href="http://mdn.io/postMessage">http://mdn.io/postMessage</a></blockquote>
+
+                    <br>
+                    <p>Pass data easily between a third party parent page and a iframe on a domain you control.</p>
                 </section>
 
                 <section>
@@ -155,7 +156,7 @@
     );
 
     window.addEventListener('message', function(event){
-      if(event.origin === that.appHost && event.data == 'some_trigger'){
+      if(event.origin == that.appHost && event.data == 'some_trigger'){
         // Do some action
       }
     });
