@@ -1,0 +1,15 @@
+body {
+    background: white;
+}
+
+p {
+    padding: 15px;
+}
+
+p.bg-success {
+    background-color: #dff0d8;
+}
+
+.hide {
+    display: none;
+}

@@ -22,3 +22,11 @@
 .reveal blockquote .quote:after {
   content: '\201D';
 }
+.column-containers {
+    width:49.5%;
+    height: 100%;
+    float:left;
+}
+.column-containers.tiny {
+    min-height: 0;
+}
