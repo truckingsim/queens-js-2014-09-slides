@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="../css/example.css" />
+    </head>
+    <body>
+        <p class="text" id="first">Feed me data!</p>
+        <p class="text hide" id="second"><button id="give-me-more">Give me more!</button></p>
+        <p class="text hide" id="third"><button id="close-frame">Close Frame</button></p>
+        <script src="../js/jquery.js"></script>
+        <script>
+            $(function(){
+                window.addEventListener('message', function(event){
+                    if(event.data === 'food'){
+                        $('#first').addClass('hide');
+                        $('#second').removeClass('hide');
+                    }
+                    if(event.data === 'more-food'){
+                        $('#second').addClass('hide');
+                        $('#third').removeClass('hide');
+                    }
+                });
+
+                $('#give-me-more').click(function(){
+                    $('#second').html('Give me more!');
+                    window.parent.postMessage('feed-me-more', location.origin);
+                });
+                $('#close-frame').click(function(){
+                    window.parent.postMessage('close-frame', location.origin);
+                });
+            });
+        </script>
+    </body>
+</html>

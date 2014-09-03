@@ -30,3 +30,10 @@
 .column-containers.tiny {
     min-height: 0;
 }
+
+.column-containers.right {
+    float:right;
+}
+.hide {
+    display: none;
+}

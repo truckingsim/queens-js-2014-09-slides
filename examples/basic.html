@@ -6,12 +6,15 @@
         <link rel="stylesheet" href="../css/example.css" />
     </head>
     <body>
-        <p>test</p>
-        <p class="bg-success">test</p>
+        <p class="text">Feed me data!</p>
         <script src="../js/jquery.js"></script>
         <script>
             $(function(){
-
+                window.addEventListener('message', function(event){
+                    if(event.data === 'food'){
+                        $('.text').addClass('bg-success').text("I'm fed!");
+                    }
+                });
             });
         </script>
     </body>

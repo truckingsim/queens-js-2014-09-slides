@@ -49,8 +49,7 @@
 				</section>
 
                 <section>
-                    <h3>Building a bookmarklet that can be dragged</h3>
-                    <pre class="highlight html"><span class="fragment visible current-fragment">&lt;a href="javascript: ..." onClick="return false">Drag Me!&lt;/a></span></pre>
+                    <h3>Building a draggable bookmarklet</h3>
                     <pre class="highlight javascript">
 <span class="background-info">(function(){</span>
     <span class="fragment">window._project_name_url='http://example.dev';</span>
@@ -59,6 +58,7 @@
     s.setAttribute('type', 'text/javascript');</span>
     <span class="fragment">document.getElementsByTagName('head')[0].appendChild(s);</span>
 <span class="background-info">})();</span></pre>
+                    <pre class="highlight html"><span class="fragment">&lt;a href="javascript: ..." onClick="return false">Drag Me!&lt;/a></span></pre>
                 </section>
 
                 <section>
@@ -80,14 +80,14 @@
         <span class="background-info">this.generateIframe()</span>
     }
     loadMetaTags: function(){
-        var tags = document.getElementsByTagName('meta');
-        for(var i = 0; i < tags.length; i++){
+        <span class="fragment">var tags = document.getElementsByTagName('meta');</span>
+        <span class="fragment">for(var i = 0; i < tags.length; i++){
             var key = tags[i].name || tags[i].getAttribute('itemprop');
             var content = tags[i].getAttribute('content');
             if(key && content){
                 this.metaTags[key] = content;
             }
-        }
+        }</span>
     }
 };</pre>
                 </section>
@@ -189,16 +189,58 @@ window.addEventListener('message', function(event){
                     </section>
 
                     <section>
+                        <h3>Basic Code</h3>
+                        <div>parent</div>
+                        <div>
+                            <pre class="highlight javascript">var iframe = document.getElementById('basic-iframe');
+$('#basic-send').click(function(){
+    iframe.contentWindow.postMessage('food', location.origin);
+});</pre>
+                        </div>
+                        <div>iframe</div>
+                        <div>
+                            <pre class="highlight javascript">window.addEventListener('message', function(event){
+    if(event.data === 'food'){
+        $('.text').addClass('bg-success').text("I'm fed!");
+    }
+});</pre>
+                        </div>
+                    </section>
+
+                    <section>
                         <h3>The basics!</h3>
 
                         <div class="column-containers tiny">iframe</div>
                         <div class="column-containers tiny">parent</div>
                         <div class="column-containers">
-                            <iframe style="width: 100%; height: 50%;" src="examples/basic.html"></iframe>
+                            <iframe style="width: 100%; height: 50%;" id="basic-iframe" src="examples/basic.html"></iframe>
                         </div>
                         <div class="column-containers">
+                            <button id="basic-send">Send food</button>
+                        </div>
+                    </section>
 
-                            <button id="basic-send">Send data to iframe</button>
+                    <section>
+                        <h3>Advanced Code</h3>
+                        <div>parent</div>
+                        <div>
+
+                        </div>
+                        <div>iframe</div>
+                        <div>
+
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="column-containers tiny">iframe</div>
+                        <div class="column-containers tiny">parent</div>
+                        <div class="column-containers">
+                            <iframe style="width: 100%; height: 50%;" id="advanced-iframe" src="examples/advanced.html"></iframe>
+                        </div>
+                        <div class="column-containers right">
+                            <button id="advanced-send">Send food</button>
+                            <button id="advanced-send-2" class="hide">Send more food</button>
                         </div>
                     </section>
                 </section>
@@ -231,8 +273,28 @@ window.addEventListener('message', function(event){
 				]
 			});
 
+            var iframe = document.getElementById('basic-iframe');
             $('#basic-send').click(function(){
-                alert('test');
+                iframe.contentWindow.postMessage('food', location.origin);
+            });
+
+            var advanced_iframe = document.getElementById('advanced-iframe');
+            $('#advanced-send').click(function(){
+                $('#advanced-send').addClass('hide');
+                advanced_iframe.contentWindow.postMessage('food', location.origin);
+            });
+            $('#advanced-send-2').click(function(){
+                $('#advanced-send-2').addClass('hide');
+                advanced_iframe.contentWindow.postMessage('more-food', location.origin);
+            });
+
+            window.addEventListener('message', function(event){
+                if(event.data === 'feed-me-more'){
+                    $('#advanced-send-2').removeClass('hide');
+                }
+                if(event.data === 'close-frame'){
+                    $('#advanced-iframe').remove();
+                }
             });
 		</script>
 

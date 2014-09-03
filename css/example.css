@@ -6,6 +6,10 @@ p {
     padding: 15px;
 }
 
+.text {
+    font-size: 23px;
+}
+
 p.bg-success {
     background-color: #dff0d8;
 }
