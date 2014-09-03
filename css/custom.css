@@ -22,18 +22,23 @@
 .reveal blockquote .quote:after {
   content: '\201D';
 }
-.column-containers {
-    width:49.5%;
-    height: 100%;
-    float:left;
+.reveal .column-containers {
+  width: 49.5%;
+  float: left;
 }
-.column-containers.tiny {
-    min-height: 0;
+.reveal .column-containers .content {
+  margin-top: 15px;
+  min-height: 280px;
 }
-
-.column-containers.right {
-    float:right;
+.reveal .column-containers .content iframe {
+  height: 280px;
 }
-.hide {
-    display: none;
+.reveal .column-containers .right {
+  float: right;
+}
+.reveal .example-button {
+  font-size: 23px;
+}
+.reveal .hide {
+  display: none;
 }

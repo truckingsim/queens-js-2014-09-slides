@@ -49,6 +49,21 @@
 				</section>
 
                 <section>
+                    <h3>Real world examples</h3>
+                    <img src="img/amazon.png">
+                </section>
+
+                <section>
+                    <h3>Real world examples</h3>
+                    <img src="img/myregistry.png">
+                </section>
+
+                <section>
+                    <h3>Real world examples</h3>
+                    <img src="img/blueprint.png">
+                </section>
+
+                <section>
                     <h3>Building a draggable bookmarklet</h3>
                     <pre class="highlight javascript">
 <span class="background-info">(function(){</span>
@@ -141,7 +156,7 @@
                 </section>
 
                 <section>
-                    <h3>window.postMessage?</h3>
+                    <h3>Using window.postMessage</h3>
                     <pre class="highlight javascript">var ProjectBookmarkletObject = {
   appHost: window._project_name_url,
   metaTags: {},
@@ -168,10 +183,8 @@
 
                 <section>
                     <h3>Listening in the iframe</h3>
-                    <pre class="highlight javascript">var ParentEvent;
+                    <pre class="highlight javascript">var ProjectIframe = {};
 window.addEventListener('message', function(event){
-    ParentEvent = event;
-
     ProjectIframe._preload.data = JSON.parse(event.data);
     ProjectIframe.data_loaded = true;
     $(function(){
@@ -216,7 +229,7 @@ $('#basic-send').click(function(){
                             <iframe style="width: 100%; height: 50%;" id="basic-iframe" src="examples/basic.html"></iframe>
                         </div>
                         <div class="column-containers">
-                            <button id="basic-send">Send food</button>
+                            <button id="basic-send" class="example-button">Send food</button>
                         </div>
                     </section>
 
@@ -224,11 +237,49 @@ $('#basic-send').click(function(){
                         <h3>Advanced Code</h3>
                         <div>parent</div>
                         <div>
+                            <pre class="highlight javascript">var advanced_iframe = document.getElementById('advanced-iframe');
+$('#advanced-send').click(function(){
+    $('#advanced-send').addClass('hide');
+    advanced_iframe.contentWindow.postMessage('food', location.origin);
+});
+$('#advanced-send-2').click(function(){
+    $('#advanced-send-2').addClass('hide');
+    advanced_iframe.contentWindow.postMessage('more-food', location.origin);
+});
 
+window.addEventListener('message', function(event){
+    if(event.data === 'feed-me-more'){
+        $('#advanced-send-2').removeClass('hide');
+    }
+    if(event.data === 'close-frame'){
+        $('#advanced-iframe').remove();
+    }
+});</pre>
                         </div>
+                    </section>
+
+                    <section>
+                        <h3>Advanced Code</h3>
                         <div>iframe</div>
                         <div>
+                            <pre class="highlight javascript">window.addEventListener('message', function(event){
+    if(event.data === 'food'){
+        $('#first').addClass('hide');
+        $('#second').removeClass('hide');
+    }
+    if(event.data === 'more-food'){
+        $('#second').addClass('hide');
+        $('#third').removeClass('hide');
+    }
+});
 
+$('#give-me-more').click(function(){
+    $('#second').html('Give me more!');
+    window.parent.postMessage('feed-me-more', location.origin);
+});
+$('#close-frame').click(function(){
+    window.parent.postMessage('close-frame', location.origin);
+});</pre>
                         </div>
                     </section>
 
@@ -239,8 +290,8 @@ $('#basic-send').click(function(){
                             <iframe style="width: 100%; height: 50%;" id="advanced-iframe" src="examples/advanced.html"></iframe>
                         </div>
                         <div class="column-containers right">
-                            <button id="advanced-send">Send food</button>
-                            <button id="advanced-send-2" class="hide">Send more food</button>
+                            <button id="advanced-send" class="example-button">Send food</button>
+                            <button id="advanced-send-2" class="hide example-button">Send more food</button>
                         </div>
                     </section>
                 </section>

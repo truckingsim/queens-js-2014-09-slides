@@ -9,7 +9,9 @@ p {
 .text {
     font-size: 23px;
 }
-
+.text button {
+    font-size: 23px;
+}
 p.bg-success {
     background-color: #dff0d8;
 }
